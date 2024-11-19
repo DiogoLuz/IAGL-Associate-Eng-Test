@@ -1,12 +1,11 @@
-
 let todoList = {
-  todos: [
-    {
-      "task": "This is a todo example"
-    }
-  ]
+  todos: [],
 };
 
 module.exports = {
-  getTodos: () => Promise.resolve(todoList)
+  getTodos: () => Promise.resolve(todoList),
+  addTodo: (todoListItem) => {
+    todoList.todos.push(todoListItem);
+    return Promise.resolve(todoList);
+  },
 };

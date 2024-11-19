@@ -1,18 +1,20 @@
 import React, { Component } from "react";
 import Todo from "./Todo";
-import { fetchTodos } from "../actions";
+import { addTodo, fetchTodos } from "../actions";
 import { connect } from "react-redux";
-import EnterToDo from "./EnterToDo";
+import TodoListForm from "./TodoListForm";
 
 class TodoList extends Component {
-  state = {};
+  state = {}; // Component's state (currently empty)
 
   componentDidMount() {
+    // Fetch todos when the component mounts
     this.props.fetchTodos();
   }
 
   render() {
-    const { todos } = this.props.data;
+    const { todos } = this.props.data; // Extract todos from Redux state
+
     return (
       <div>
         <ul className="todo-list">
@@ -22,16 +24,19 @@ class TodoList extends Component {
               })
             : "No todos, yay!"}
         </ul>
-        <EnterToDo />
+        {/* Render EnterToDo form and pass addTodo as prop */}
+        <TodoListForm addTodo={addTodo} />
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ data = {}, isLoadingData = false }) => ({
-  data,
-  isLoadingData,
+// Map Redux state to component props
+const mapStateToProps = ({ data = {} }) => ({
+  data, // Pass the 'data' (todos) as props
 });
+
 export default connect(mapStateToProps, {
-  fetchTodos,
-})(TodoList);
+  fetchTodos, // Connect fetchTodos action to props
+  addTodo, // Connect addTodo action to props
+})(TodoList); // Export the connected component
